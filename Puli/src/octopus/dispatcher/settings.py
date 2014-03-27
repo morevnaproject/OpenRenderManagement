@@ -30,6 +30,14 @@ def loadSettingsFile(filename):
     settings = ((name, value) for name, value in l.items() if name.isupper() and  name in globals())
     globals().update(settings)
 
+def getFileBackendRnPath():
+    return os.path.join(CONFDIR, "workers.lst")
+
+def getFileBackendLicencesPath():
+    return os.path.join(CONFDIR, "licences.lst")
+
+def getFileBackendPoolPath():
+    return os.path.join(CONFDIR, "pools")
 
 ## SETTINGS ###########################################################
 
@@ -71,9 +79,6 @@ POOLS_BACKEND_TYPE = "db"
 #POOLS_BACKEND_TYPE = "file"
 #POOLS_BACKEND_TYPE = "ws"
 
-FILE_BACKEND_RN_PATH = os.path.join(CONFDIR, "workers.lst")
-FILE_BACKEND_LICENCES_PATH = os.path.join(CONFDIR, "licences.lst")
-FILE_BACKEND_POOL_PATH = os.path.join(CONFDIR, "pools")
 WS_BACKEND_URL = ""
 WS_BACKEND_PORT = 11800
 

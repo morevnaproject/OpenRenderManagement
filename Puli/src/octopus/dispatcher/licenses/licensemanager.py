@@ -40,10 +40,10 @@ class LicenseManager:
         self.readLicensesData()
 
     def readLicensesData(self):
-        if not os.path.exists(settings.FILE_BACKEND_LICENCES_PATH):
-            raise Exception("Licenses file missing: %s" % settings.FILE_BACKEND_LICENCES_PATH)
+        if not os.path.exists(settings.getFileBackendLicencesPath()):
+            raise Exception("Licenses file missing: %s" % settings.getFileBackendLicencesPath())
         else:
-            fileIn = open(settings.FILE_BACKEND_LICENCES_PATH, "r")
+            fileIn = open(settings.getFileBackendLicencesPath(), "r")
             lines = [line for line in fileIn.readlines() if not line.startswith("#")]
             fileIn.close()
 

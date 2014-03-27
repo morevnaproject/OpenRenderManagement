@@ -36,9 +36,9 @@ class PoolDefinitionFileParsingError(ParsingError):
 class FilePoolManager(IPoolManager):
 
     def __init__(self):
-        if not os.path.exists(settings.FILE_BACKEND_POOL_PATH):
+        if not os.path.exists(settings.getFileBackendPoolPath()):
             raise Exception()
-        if not os.path.exists(settings.FILE_BACKEND_RN_PATH):
+        if not os.path.exists(settings.getFileBackendRnPath()):
             raise Exception()
         self.defaultPool = PoolDescription(1, u'default', None)
         self.pools = [self.defaultPool]
@@ -52,7 +52,7 @@ class FilePoolManager(IPoolManager):
 
     def listPools(self):
         id = 1  # FIXME this should be defined in the file
-        for name, computers in self.parsePoolDirectory(settings.FILE_BACKEND_POOL_PATH):
+        for name, computers in self.parsePoolDirectory(settings.getFileBackendPoolPath()):
             id += 1
             version = None
             poolDesc = PoolDescription(id, name, version)
@@ -76,7 +76,7 @@ class FilePoolManager(IPoolManager):
 
     def listComputers(self):
         id = 0  # FIXME this should be defined in the file
-        for desc in self.parseWorkerListFile(settings.FILE_BACKEND_RN_PATH):
+        for desc in self.parseWorkerListFile(settings.getFileBackendRnPath()):
             id += 1
             name = desc['hostname']
             version = None

@@ -72,6 +72,7 @@ def daemonize(username=""):
 def process_args():
     parser = optparse.OptionParser()
     parser.add_option("-P", "--pid-file", action="store", dest="PIDFILE", help="change the pid file")
+    parser.add_option("-c", "--confdir", action="store", dest="CONFDIR", help="change the configuration directory")
     parser.add_option("-d", "--daemon", action="store_true", dest="DAEMONIZE", default=False, help="daemonize the dispatcher")
     parser.add_option("-b", "--bind", action="store", type="string", dest="ADDRESS", metavar="HOST", help="change the HOST the web service is bound on")
     parser.add_option("-p", "--port", action="store", type="int", dest="PORT", metavar="PORT", help="change the PORT the web service is listening on")

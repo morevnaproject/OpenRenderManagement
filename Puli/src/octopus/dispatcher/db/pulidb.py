@@ -758,11 +758,14 @@ class PuliDB(object):
         for num, dbPoolShare in enumerate(poolShares):
             id, poolId, nodeId, maxRN, archived = dbPoolShare
             #FIXME temp
-            if nodeId in nodesById.keys():
-                realPoolShare = PoolShare(id,
-                                      poolsById[poolId],
-                                      nodesById[nodeId],
-                                      maxRN)
+            if not poolId in poolsById.keys():
+                print "%s !!! Warning: PoolShare %d references nonexisting pool ID (%d)" % (time.strftime('[%H:%M:%S]', time.gmtime(time.time() - begintime)),id,poolId)
+            else:
+                if nodeId in nodesById.keys():
+                    realPoolShare = PoolShare(id,
+                                          poolsById[poolId],
+                                          nodesById[nodeId],
+                                          maxRN)
             tree.poolShares[realPoolShare.id] = realPoolShare
 
         print "%s -- poolshares complete --" % (time.strftime('[%H:%M:%S]', time.gmtime(time.time() - begintime)))

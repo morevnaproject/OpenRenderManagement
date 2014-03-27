@@ -42,24 +42,26 @@ ADDRESS = getLocalAddress()
 RUN_AS = None
 
 
-#
-# DEV/EVAL/PROD ENV
-#
+#BASEDIR = "/s/apps/lin/vfx_test_apps/"
+BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-# EVAL ENV
-BASEDIR = "/s/apps/lin/vfx_test_apps/"
+# Let's guess the CONFDIR
+if os.path.isdir(os.path.expanduser("~/.config/puli")):
+    # First look for per-user configuration
+    CONFDIR = os.path.expanduser("~/.config/puli")
+elif os.path.isdir(os.path.expanduser("/etc/puli")):
+    # Then check system-wide configuration
+    CONFDIR = os.path.expanduser("/etc/puli")
+else:
+    # Use bundled config if none above worked
+    CONFDIR = os.path.join(BASEDIR, "etc/puli")
 
-# DEV ENV
-#BASEDIR = "/datas/jsa/"
+if os.path.isdir("/var/log/puli") and os.access("/var/log/puli", os.W_OK):
+    LOGDIR = "/var/log/puli"
+else:
+    LOGDIR = os.path.join(os.path.dirname(BASEDIR), "logs")
 
-LOGDIR = BASEDIR + "OpenRenderManagement/logs"
-CONFDIR = BASEDIR + "OpenRenderManagement/Puli/etc/puli"
-
-# PROD
-#LOGDIR = "/opt/puli/logs"
-#CONFDIR = "/opt/puli/conf"
-
-PIDFILE = "/var/run/puli/dispatcher.pid"  # service control pid file
+PIDFILE = "/var/run/puli-dispatcher.pid"  # service control pid file
 
 
 #

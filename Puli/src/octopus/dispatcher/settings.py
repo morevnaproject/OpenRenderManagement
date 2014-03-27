@@ -69,7 +69,10 @@ if os.path.isdir("/var/log/puli") and os.access("/var/log/puli", os.W_OK):
 else:
     LOGDIR = os.path.join(os.path.dirname(BASEDIR), "logs")
 
-PIDFILE = "/var/run/puli-dispatcher.pid"  # service control pid file
+if os.access("/var/run", os.W_OK):
+    PIDFILE = "/var/run/puli-dispatcher.pid"  # service control pid file
+else:
+    PIDFILE = os.path.expanduser("~/.puli-dispatcher.pid")
 
 
 #

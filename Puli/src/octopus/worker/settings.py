@@ -13,6 +13,7 @@ __copyright__   = "Copyright 2010, Mikros Image"
 
 
 import socket
+import os
 
 
 def getLocalAddress():
@@ -59,12 +60,20 @@ DISPATCHER_ADDRESS = "puliserver"
 #
 # Definition des fichiers de surveillance
 #
-PIDFILE = "/var/run/puli/worker.pid"  # service control pid file
+if os.access("/var/run", os.W_OK):
+    PIDFILE = "/var/run/puli-worker.pid"  # service control pid file
+else:
+    PIDFILE = os.path.expanduser("~/.puli-worker.pid")
 
 KILLFILE = "/tmp/render/killfile"        # indicate if the worker needs to be paused, kill and paused or resumed
 RESTARTFILE = "/tmp/render/restartfile"  # indicate if the worker must be restarted by the respawner
 
 RUN_AS = ""
-LOGDIR = "/var/log/puli"
+
+BASEDIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+if os.path.isdir("/var/log/puli") and os.access("/var/log/puli", os.W_OK):
+    LOGDIR = "/var/log/puli"
+else:
+    LOGDIR = os.path.join(os.path.dirname(BASEDIR), "logs")
 
 LIMIT_OPEN_FILES = 32768

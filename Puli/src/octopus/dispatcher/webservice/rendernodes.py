@@ -103,6 +103,11 @@ class RenderNodeResource(DispatcherBaseResource):
             renderNode = RenderNode(None, computerName, cores, speed, name, port, ram, caracteristics, puliversion=puliversion, createDate=createDate)
 
             renderNode.status = status
+
+            # if no pools provided, then register to default pool
+            if len(pools) == 0:
+                pools.append(self.dispatcher.defaultPool.name)
+
             poolList = []
             # check the existence of the pools
             for poolName in pools:

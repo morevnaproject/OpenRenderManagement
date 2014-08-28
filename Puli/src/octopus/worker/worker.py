@@ -870,8 +870,13 @@ class Worker(MainLoopApplication):
         #
         # Create a list of child processes
         #
-        p = psutil.Process()
-        childProcs = p.children(recursive=True)
+        p = psutil.Process(pid=os.getpid())
+        if "get_children" in dir(p):
+            # psutil 1.2.x
+            childProcs = p.get_children(recursive=True)
+        else:
+            # psutil 2.x
+            childProcs = p.children(recursive=True)
 
         for proc in childProcs:
             try:
